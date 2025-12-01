@@ -1,0 +1,194 @@
+Email Extraction & User History ETL Pipeline
+
+A complete ETL data engineering pipeline that extracts email addresses and timestamps from a server log file, loads the data into MongoDB, retrieves it back, stores it in a relational database (SQLite), and runs analytical SQL queries.
+
+📌 Project Overview
+
+This project automates the extraction and storage of email activity logs from a server log file (mbox.txt).
+It performs the following:
+
+Fetches log file automatically from GitHub (raw URL)
+
+Extracts all email addresses and corresponding dates
+
+Transforms the dates into a standard format
+
+Loads the cleaned data into MongoDB
+
+Fetches data back from MongoDB
+
+Saves the data into SQLite
+
+Runs 10 analytical SQL queries on the stored data
+
+This ensures all historical email events are stored, processed, and analyzed efficiently.
+
+🚀 Technologies Used
+Component	Technology
+Programming	Python
+Database (NoSQL)	MongoDB Atlas
+Database (SQL)	SQLite
+Environment	Google Colab
+Libraries	pymongo, sqlite3, re, datetime
+📁 Project Flow (ETL Pipeline)
+GitHub mbox.txt → Extract → Transform → MongoDB → Fetch → SQLite → SQL Analysis
+
+🧠 Features
+✔ Automatic log file download (no manual upload needed)
+✔ Email + date extraction using regex
+✔ Date normalization into YYYY-MM-DD HH:MM:SS
+✔ Duplicate prevention
+✔ MongoDB upload + retrieval
+✔ SQLite storage
+✔ 10 SQL analysis queries
+✔ No .db download to prevent corrupted files
+📄 Project Tasks (Per Requirements)
+Task 1: Extract Email Addresses and Dates
+
+Reads each line of log file
+
+Identifies lines starting with "From"
+
+Extracts:
+
+Email address
+
+Date string
+
+Task 2: Data Transformation
+
+Converts extracted dates into:
+
+YYYY-MM-DD HH:MM:SS
+
+
+Structures each record as:
+
+{
+  "email": "someone@example.com",
+  "date": "2024-01-04 10:10:10"
+}
+
+Task 3: Save to MongoDB
+
+Connects to MongoDB Atlas using connection string
+
+Uploads all processed records to user_history collection
+
+Task 4: Fetch Data & Save to SQLite
+
+Retrieves same data back from MongoDB
+
+Creates SQLite table user_history with:
+
+id (Primary Key)
+
+email
+
+date
+
+Inserts all records
+
+Task 5: Run SQL Queries
+
+The project executes 10 SQL analysis queries:
+
+Count unique emails
+
+Count emails per day
+
+First email per address
+
+Last email per address
+
+Total email records
+
+Emails per month
+
+Most active email
+
+Count emails per domain
+
+First appearance of each domain
+
+Oldest 5 email records
+
+📦 How to Run the Project
+Step 1: Open Google Colab
+Step 2: Copy the entire provided single-cell script
+Step 3: Run the cell
+
+The pipeline will:
+
+✔ Download log file
+✔ Extract emails
+✔ Upload to MongoDB
+✔ Insert into SQLite
+✔ Generate 10 SQL outputs
+
+📊 Sample Output (SQL Queries)
+
+Outputs include:
+
+Number of unique email addresses
+
+Email activity by day
+
+First & last activity timestamps
+
+Frequent domains
+
+Most active user
+
+Monthly email volume
+
+🔐 MongoDB Configuration
+
+Ensure your MongoDB Atlas cluster allows connections from:
+
+"0.0.0.0/0" (For testing only)
+or
+
+Your Colab IP address
+
+And that your database user credentials are correct in:
+
+MONGO_URI = "mongodb+srv://<user>:<password>@cluster.mongodb.net/"
+
+📌 Why SQLite DB File Is NOT Downloaded
+
+Colab sometimes corrupts .db files during download.
+Since the project requirements do not include downloading the .db file, it was removed to avoid errors.
+
+The SQLite DB remains available in the Colab runtime for analysis.
+
+📚 Folder Structure (If saved locally)
+project/
+│
+├── README.md
+├── email_etl.ipynb
+├── user_history.db  (generated at runtime only)
+└── mbox.txt         (fetched from GitHub)
+
+🧩 Future Enhancements
+
+Add Streamlit dashboard for visualization
+
+Add domain-wise time-series graphs
+
+Add API endpoint for fetching user history
+
+Add Airflow automation for scheduling
+
+🏁 Conclusion
+
+This project successfully achieves:
+
+✔ Email extraction
+✔ Data cleaning
+✔ Structured transformation
+✔ Upload to MongoDB
+✔ Transfer to SQL
+✔ Running advanced SQL queries
+
+It provides a complete ETL + analytics workflow suitable for interviews, academic projects, and real-world log processing.
